@@ -1,0 +1,7 @@
+# Excel temporary/lock files
+~$*.xlsx
+~$*.xlsm
+~$*.xls
+
+# Power BI temporary files
+*.pbi-local
