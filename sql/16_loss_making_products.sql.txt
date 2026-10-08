@@ -1,0 +1,15 @@
+SELECT
+    product_id,
+    product_name,
+    ROUND(SUM(sales), 2) AS revenue,
+    ROUND(SUM(profit), 2) AS profit,
+    COUNT(DISTINCT order_id) AS orders,
+    ROUND(
+        100.0 * SUM(profit) / NULLIF(SUM(sales), 0),
+        2
+    ) AS profit_margin_pct
+FROM global_superstore_orders
+GROUP BY product_id, product_name
+HAVING SUM(profit) < 0
+ORDER BY profit ASC
+LIMIT 10;

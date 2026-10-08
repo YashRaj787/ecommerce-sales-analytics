@@ -1,0 +1,15 @@
+WITH regional_profit AS (
+    SELECT
+        region,
+        SUM(profit) AS total_profit
+    FROM global_superstore_orders
+    GROUP BY region
+)
+SELECT
+    region,
+    ROUND(total_profit, 2) AS total_profit,
+    RANK() OVER (
+        ORDER BY total_profit DESC
+    ) AS profit_rank
+FROM regional_profit
+ORDER BY profit_rank;

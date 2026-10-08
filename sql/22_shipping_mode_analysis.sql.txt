@@ -1,0 +1,16 @@
+SELECT
+    ship_mode,
+    ROUND(SUM(sales), 2) AS revenue,
+    ROUND(SUM(profit), 2) AS profit,
+    COUNT(DISTINCT order_id) AS orders,
+    ROUND(
+        100.0 * SUM(profit) / NULLIF(SUM(sales), 0),
+        2
+    ) AS profit_margin_pct,
+    ROUND(
+        SUM(shipping_cost),
+        2
+    ) AS total_shipping_cost
+FROM global_superstore_orders
+GROUP BY ship_mode
+ORDER BY profit DESC;

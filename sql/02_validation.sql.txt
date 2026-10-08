@@ -1,0 +1,13 @@
+SELECT COUNT(*) AS row_count
+FROM global_superstore_orders;
+
+SELECT
+    COUNT(DISTINCT order_id) AS orders,
+    COUNT(DISTINCT customer_id) AS customers
+FROM global_superstore_orders;
+
+SELECT
+    SUM(sales) AS revenue,
+    SUM(profit) AS profit,
+    SUM(quantity) AS quantity
+FROM global_superstore_orders;

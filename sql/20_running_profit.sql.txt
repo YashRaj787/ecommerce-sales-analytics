@@ -1,0 +1,19 @@
+WITH monthly AS (
+    SELECT
+        DATE_TRUNC('month', order_date)::date AS month,
+        SUM(profit) AS profit
+    FROM global_superstore_orders
+    GROUP BY 1
+)
+SELECT
+    month,
+    ROUND(profit, 2) AS monthly_profit,
+    ROUND(
+        SUM(profit) OVER (
+            ORDER BY month
+            ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+        ),
+        2
+    ) AS cumulative_profit
+FROM monthly
+ORDER BY month;

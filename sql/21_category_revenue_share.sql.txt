@@ -1,0 +1,17 @@
+WITH category_sales AS (
+    SELECT
+        category,
+        SUM(sales) AS revenue
+    FROM global_superstore_orders
+    GROUP BY category
+)
+SELECT
+    category,
+    ROUND(revenue, 2) AS revenue,
+    ROUND(
+        100.0 * revenue
+        / SUM(revenue) OVER (),
+        2
+    ) AS revenue_share_pct
+FROM category_sales
+ORDER BY revenue DESC;

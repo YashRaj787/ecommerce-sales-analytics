@@ -1,0 +1,49 @@
+WITH banded_data AS (
+    SELECT
+        CASE
+            WHEN discount >= 0
+                 AND discount <= 0.10 THEN '0-10%'
+            WHEN discount > 0.10
+                 AND discount <= 0.20 THEN '>10-20%'
+            WHEN discount > 0.20
+                 AND discount <= 0.30 THEN '>20-30%'
+            WHEN discount > 0.30
+                 AND discount <= 0.40 THEN '>30-40%'
+            WHEN discount > 0.40
+                 AND discount <= 0.50 THEN '>40-50%'
+            WHEN discount > 0.50
+                 AND discount <= 0.60 THEN '>50-60%'
+            WHEN discount > 0.60
+                 AND discount <= 0.70 THEN '>60-70%'
+            WHEN discount > 0.70
+                 AND discount <= 0.80 THEN '>70-80%'
+            WHEN discount > 0.80 THEN '>80%'
+        END AS discount_band,
+        sales,
+        profit,
+        order_id
+    FROM global_superstore_orders
+)
+SELECT
+    discount_band,
+    ROUND(SUM(sales), 2) AS revenue,
+    ROUND(SUM(profit), 2) AS profit,
+    COUNT(DISTINCT order_id) AS orders,
+    ROUND(
+        100.0 * SUM(profit) / NULLIF(SUM(sales), 0),
+        2
+    ) AS profit_margin_pct
+FROM banded_data
+GROUP BY discount_band
+ORDER BY
+    CASE discount_band
+        WHEN '0-10%' THEN 1
+        WHEN '>10-20%' THEN 2
+        WHEN '>20-30%' THEN 3
+        WHEN '>30-40%' THEN 4
+        WHEN '>40-50%' THEN 5
+        WHEN '>50-60%' THEN 6
+        WHEN '>60-70%' THEN 7
+        WHEN '>70-80%' THEN 8
+        WHEN '>80%' THEN 9
+    END;

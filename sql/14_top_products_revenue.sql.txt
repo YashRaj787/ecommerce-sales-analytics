@@ -1,0 +1,10 @@
+SELECT
+    product_id,
+    product_name,
+    ROUND(SUM(sales), 2) AS revenue,
+    ROUND(SUM(profit), 2) AS profit,
+    COUNT(DISTINCT order_id) AS orders
+FROM global_superstore_orders
+GROUP BY product_id, product_name
+ORDER BY revenue DESC
+LIMIT 10;

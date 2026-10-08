@@ -1,0 +1,28 @@
+WITH customer_metrics AS (
+    SELECT
+        customer_id,
+        SUM(sales) AS total_revenue,
+        SUM(profit) AS total_profit,
+        COUNT(DISTINCT order_id) AS total_orders
+    FROM global_superstore_orders
+    GROUP BY customer_id
+),
+customer_profile AS (
+    SELECT DISTINCT
+        customer_id,
+        customer_name,
+        segment
+    FROM global_superstore_orders
+)
+SELECT
+    p.customer_id,
+    p.customer_name,
+    p.segment,
+    ROUND(m.total_revenue, 2) AS revenue,
+    ROUND(m.total_profit, 2) AS profit,
+    m.total_orders
+FROM customer_profile p
+JOIN customer_metrics m
+    ON p.customer_id = m.customer_id
+ORDER BY m.total_profit DESC
+LIMIT 10;

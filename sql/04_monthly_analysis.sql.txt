@@ -1,0 +1,40 @@
+WITH monthly AS (
+    SELECT
+        DATE_TRUNC('month', order_date)::date AS month,
+        SUM(sales) AS revenue,
+        SUM(profit) AS profit,
+        COUNT(DISTINCT order_id) AS orders
+    FROM global_superstore_orders
+    GROUP BY 1
+),
+monthly_with_lag AS (
+    SELECT
+        month,
+        revenue,
+        profit,
+        orders,
+        LAG(revenue) OVER (ORDER BY month) AS previous_revenue,
+        LAG(profit) OVER (ORDER BY month) AS previous_profit
+    FROM monthly
+)
+SELECT
+    month,
+    ROUND(revenue, 2) AS revenue,
+    ROUND(profit, 2) AS profit,
+    orders,
+    ROUND(
+        100.0 * profit / NULLIF(revenue, 0),
+        2
+    ) AS profit_margin_pct,
+    ROUND(
+        100.0 * (revenue - previous_revenue)
+        / NULLIF(previous_revenue, 0),
+        2
+    ) AS mom_revenue_growth_pct,
+    ROUND(
+        100.0 * (profit - previous_profit)
+        / NULLIF(previous_profit, 0),
+        2
+    ) AS mom_profit_growth_pct
+FROM monthly_with_lag
+ORDER BY month;

@@ -1,0 +1,27 @@
+WITH subcategory_profit AS (
+    SELECT
+        category,
+        sub_category,
+        SUM(profit) AS total_profit
+    FROM global_superstore_orders
+    GROUP BY category, sub_category
+),
+ranked AS (
+    SELECT
+        category,
+        sub_category,
+        total_profit,
+        RANK() OVER (
+            PARTITION BY category
+            ORDER BY total_profit DESC
+        ) AS profit_rank
+    FROM subcategory_profit
+)
+SELECT
+    category,
+    sub_category,
+    ROUND(total_profit, 2) AS total_profit,
+    profit_rank
+FROM ranked
+WHERE profit_rank <= 3
+ORDER BY category, profit_rank;

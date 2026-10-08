@@ -1,0 +1,30 @@
+WITH product_revenue AS (
+    SELECT
+        category,
+        product_id,
+        product_name,
+        SUM(sales) AS revenue
+    FROM global_superstore_orders
+    GROUP BY category, product_id, product_name
+),
+ranked AS (
+    SELECT
+        category,
+        product_id,
+        product_name,
+        revenue,
+        RANK() OVER (
+            PARTITION BY category
+            ORDER BY revenue DESC
+        ) AS revenue_rank
+    FROM product_revenue
+)
+SELECT
+    category,
+    product_id,
+    product_name,
+    ROUND(revenue, 2) AS revenue,
+    revenue_rank
+FROM ranked
+WHERE revenue_rank <= 3
+ORDER BY category, revenue_rank;

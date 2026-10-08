@@ -1,0 +1,19 @@
+WITH monthly AS (
+    SELECT
+        DATE_TRUNC('month', order_date)::date AS month,
+        SUM(sales) AS revenue
+    FROM global_superstore_orders
+    GROUP BY 1
+)
+SELECT
+    month,
+    ROUND(revenue, 2) AS monthly_revenue,
+    ROUND(
+        SUM(revenue) OVER (
+            ORDER BY month
+            ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+        ),
+        2
+    ) AS cumulative_revenue
+FROM monthly
+ORDER BY month;

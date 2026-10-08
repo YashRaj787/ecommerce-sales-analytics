@@ -1,0 +1,13 @@
+WITH subcategory_profit AS (
+    SELECT
+        sub_category,
+        SUM(profit) AS total_profit
+    FROM global_superstore_orders
+    GROUP BY sub_category
+)
+SELECT
+    sub_category,
+    ROUND(total_profit, 2) AS total_profit
+FROM subcategory_profit
+ORDER BY total_profit DESC
+LIMIT 10;
