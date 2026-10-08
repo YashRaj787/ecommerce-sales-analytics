@@ -57,7 +57,7 @@ The dataset contains order, customer, product, date, geography, shipping, sales,
 ![Geographic Analysis](screenshots/powerbi_geographic_analysis.png)
 
 ### 5. Drillthrough Detail
-![Drillthrough Detail](screenshots/powerbi_drillthrough2.png)
+![Drillthrough2 Detail](screenshots/powerbi_drillthrough2.png)
 
 ## Tools Used
 
