@@ -42,6 +42,23 @@ The dataset contains order, customer, product, date, geography, shipping, sales,
 
 **Currency note:** The source dataset does not contain an explicit currency-code field. Monetary measures in the Power BI report are displayed with a `$` symbol as a presentation convention; the currency has not been independently verified from a source field. No currency conversion was performed. Treat monetary values as source amounts rather than confirmed USD amounts.
 
+## Power BI Dashboard Preview
+
+### 1. Executive Overview
+![Executive Overview](screenshots/powerbi_executive_overview.png)
+
+### 2. Product Analysis
+![Product Analysis](screenshots/powerbi_product_analysis.png)
+
+### 3. Customer Analysis
+![Customer Analysis](screenshots/powerbi_customer_analysis.png)
+
+### 4. Geographic Analysis
+![Geographic Analysis](screenshots/powerbi_geographic_analysis.png)
+
+### 5. Drillthrough Detail
+![Drillthrough Detail](screenshots/powerbi_drillthrough2.png)
+
 ## Tools Used
 
 - **Microsoft Excel:** data inspection, Power Query cleaning, PivotTables, KPI calculations, monthly growth analysis, and dashboarding.
