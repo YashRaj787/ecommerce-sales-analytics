@@ -40,7 +40,7 @@ The dataset contains order, customer, product, date, geography, shipping, sales,
 
 **Important:** A transaction line is not necessarily a unique order. An order can contain multiple line items, so order counts use distinct `Order ID` values rather than counting rows.
 
-The source does not provide an explicit currency-code field. No foreign-exchange conversion was performed. Monetary values in this README are therefore reported as numeric source amounts, without claiming a verified currency.
+**Currency note:** The source dataset does not contain an explicit currency-code field. Monetary measures in the Power BI report are displayed with a `$` symbol as a presentation convention; the currency has not been independently verified from a source field. No currency conversion was performed. Treat monetary values as source amounts rather than confirmed USD amounts.
 
 ## Tools Used
 
